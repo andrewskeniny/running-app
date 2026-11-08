@@ -1,6 +1,7 @@
 import type { PlanWeek, Run } from "@/lib/types";
 import { addDays, dayNum, dowShort, fmtRange, today } from "@/lib/dates";
 import { fmtKm, fmtPace } from "@/lib/format";
+import { AddRun } from "./AddRun";
 
 const TYPE_LABEL: Record<string, string> = {
   E: "Easy",
@@ -38,7 +39,10 @@ export function WeekBoard({
   return (
     <section className="section">
       <div className="section__head">
-        <h2 className="section__title">{isNext ? "Prossima settimana" : "Questa settimana"}</h2>
+        <div className="section__titlerow">
+          <h2 className="section__title">{isNext ? "Prossima settimana" : "Questa settimana"}</h2>
+          <AddRun defaultDate={t} />
+        </div>
         <span className="section__meta">
           {week ? `Settimana ${week.n} di 21 · ` : ""}
           {fmtRange(monday, sunday)}

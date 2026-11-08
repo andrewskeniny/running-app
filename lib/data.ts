@@ -4,6 +4,7 @@ import Papa from "papaparse";
 import type { Plan, PlanWeek, Run, WeekSummary } from "./types";
 import { addDays, localDay, mondayOf, today } from "./dates";
 import planJson from "../data/plan.json";
+import { githubConfigured, readManualRunsFromGitHub, type ManualRun, MANUAL_PATH } from "./github";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 
@@ -38,7 +39,7 @@ function estimateRpe(paceSecPerKm: number, type: string): number {
   return 8;
 }
 
-export function loadRuns(): Run[] {
+function loadStravaRuns(): Run[] {
   const csv = fs.readFileSync(path.join(DATA_DIR, "activities.csv"), "utf8");
   const parsed = Papa.parse<string[]>(csv, { skipEmptyLines: true });
   const rows = parsed.data;
@@ -100,6 +101,64 @@ export function loadRuns(): Run[] {
   }
   runs.sort((a, b) => a.startISO.localeCompare(b.startISO));
   return runs;
+}
+
+/* ---------- Manual runs (the "+" button) ---------- */
+
+async function loadManualRuns(): Promise<ManualRun[]> {
+  // On Vercel read straight from GitHub so a run added a second ago is
+  // already there; locally (or without token) fall back to the file.
+  if (githubConfigured()) {
+    try {
+      return (await readManualRunsFromGitHub()).runs;
+    } catch {
+      /* fall through to the local file */
+    }
+  }
+  try {
+    const raw = fs.readFileSync(path.join(process.cwd(), MANUAL_PATH), "utf8");
+    return raw.trim() ? (JSON.parse(raw) as ManualRun[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function manualToRun(m: ManualRun): Run {
+  const pace = m.km ? m.movingSec / m.km : 0;
+  return {
+    id: m.id,
+    date: m.date,
+    startISO: `${m.date}T12:00:00.000Z`,
+    name: m.name || "Corsa",
+    type: "Run",
+    km: m.km,
+    movingSec: m.movingSec,
+    paceSecPerKm: pace,
+    elevGain: 0,
+    rpe: null,
+    rpeEstimated: true,
+    load: Math.round(estimateRpe(pace, "Run") * (m.movingSec / 60)),
+    avgHr: null,
+  };
+}
+
+/**
+ * Strava archive + manual runs. A manual run is dropped when the archive
+ * already has a run that day within 10% of its distance (the Strava one wins,
+ * it carries the GPX detail).
+ */
+export async function loadRuns(): Promise<Run[]> {
+  const strava = loadStravaRuns();
+  const manual = await loadManualRuns();
+  const merged = [...strava];
+  for (const m of manual) {
+    const dup = strava.some(
+      (r) => r.date === m.date && r.type === "Run" && Math.abs(r.km - m.km) <= Math.max(0.3, m.km * 0.1),
+    );
+    if (!dup) merged.push(manualToRun(m));
+  }
+  merged.sort((a, b) => a.startISO.localeCompare(b.startISO));
+  return merged;
 }
 
 /* ---------- Aggregations ---------- */

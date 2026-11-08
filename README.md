@@ -31,6 +31,22 @@ Vercel ricostruisce il sito da solo.
 
 Le date Strava sono in UTC: il sito le converte in ora italiana per assegnare le corse al giorno giusto.
 
+## Il pulsante + (aggiungere una corsa a mano)
+
+Il form salva la corsa in `data/corse-manuali.json` dentro il repo, passando dall'API di GitHub.
+Servono quattro variabili d'ambiente su Vercel (Project → Settings → Environment Variables), poi un Redeploy:
+
+| Variabile | Valore |
+|---|---|
+| `GITHUB_TOKEN` | token GitHub *fine-grained*: GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate. Repository access: **Only select repositories** → questo repo. Permissions → Repository permissions → **Contents: Read and write**. Scadenza: la massima che ti fa scegliere. |
+| `GITHUB_REPO` | `tuo-utente/nome-repo` |
+| `GITHUB_BRANCH` | `main` |
+| `APP_PASSWORD` | una password a tua scelta: la chiede il form, e il telefono se la ricorda |
+
+Campi: data, km, tempo (`52:30` oppure `1:02:15`), nome facoltativo.
+La corsa compare subito. Se poi carichi un archivio Strava che contiene la stessa corsa
+(stesso giorno, distanza entro il 10%), vince quella di Strava e la manuale viene ignorata.
+
 ## Aggiornare il piano
 
 `data/plan.json`, una settimana per oggetto:

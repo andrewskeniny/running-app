@@ -12,9 +12,9 @@ export const dynamic = "force-dynamic";
 
 const HISTORY_FROM = "2026-08-31"; // first Monday of the September restart
 
-export default function Page() {
+export default async function Page() {
   const plan = loadPlan();
-  const runs = loadRuns();
+  const runs = await loadRuns();
   const stats = computeStats(runs, plan);
   const t = today();
   const monday = mondayOf(t);
@@ -35,8 +35,7 @@ export default function Page() {
           <p className="mast__kicker">Diario di corsa · {fmtDayLong(t)}</p>
           <h1 className="mast__title">Running</h1>
           <p className="mast__sub">
-            <span className="mast__goal">Obiettivo</span> {plan.race.name}, <em>{Number(rd)} aprile {ry}</em>.
-            A {plan.race.goalA} ({plan.race.goalAPace} /km), B {plan.race.goalB} ({plan.race.goalBPace} /km).
+            <span className="mast__goal">Obiettivo</span> {plan.race.name}, <em>{Number(rd)} aprile {ry}</em> · sub 3h40
           </p>
         </div>
         <div className="countdown" aria-label="tempo alla gara">
@@ -60,19 +59,7 @@ export default function Page() {
           <h2 className="section__title">Chilometri a settimana</h2>
           <span className="section__meta">da settembre alla gara</span>
         </div>
-        <WeeklyChart weeks={weeks} mode="km" />
-      </section>
-
-      <section className="section">
-        <div className="section__head">
-          <h2 className="section__title">Carico</h2>
-          <span className="section__meta">sforzo percepito × minuti</span>
-        </div>
-        <WeeklyChart weeks={weeks.filter((w) => !w.isFuture)} mode="load" />
-        <p className="note">
-          Metodo di Foster: lo sforzo che annoti su Strava (1–10) per i minuti corsi, solo corse. Quando manca, lo stimo dal ritmo.
-          Se il carico di una settimana supera di molto la media delle quattro precedenti, è il momento di frenare, non di spingere.
-        </p>
+        <WeeklyChart weeks={weeks} />
       </section>
 
       <RecentRuns runs={runs} limit={10} />
