@@ -1,0 +1,62 @@
+{
+  "race": {
+    "name": "Milano Marathon",
+    "date": "2027-04-04",
+    "goalA": "3:35–3:40",
+    "goalB": "3:45",
+    "goalAPace": "5:06–5:13",
+    "goalBPace": "5:19"
+  },
+  "athlete": {
+    "vdot": 46,
+    "vdotNote": "10 km in 46:04 l'8 nov 2026, negative split: in gara ~44:30–45:00",
+    "paces": [
+      { "code": "E", "label": "Easy / lungo", "pace": "5:30–6:05" },
+      { "code": "M", "label": "Ritmo maratona (allenamento)", "pace": "5:05–5:15" },
+      { "code": "T", "label": "Soglia", "pace": "4:33–4:38" },
+      { "code": "I", "label": "Intervalli", "pace": "4:10–4:15" },
+      { "code": "R", "label": "Ripetute brevi / allunghi", "pace": "3:55–4:05" }
+    ]
+  },
+  "phases": [
+    { "name": "Base", "from": 1, "to": 6, "note": "4 giorni, solo easy, lungo fino a 20 km, allunghi e soglia leggera" },
+    { "name": "Qualità", "from": 7, "to": 11, "note": "5 giorni, entrano intervalli e soglia vera" },
+    { "name": "Specifico", "from": 12, "to": 18, "note": "lunghi 26–32 km con blocchi a ritmo maratona, mezza di prova a fine febbraio" },
+    { "name": "Taper", "from": 19, "to": 21, "note": "si scarica, si arriva freschi" }
+  ],
+  "weeks": [
+    {
+      "n": 1,
+      "start": "2026-11-09",
+      "targetKm": 40,
+      "note": "Settimana eccezione: calcetto lunedì sera, weekend a casa senza corsa.",
+      "sessions": [
+        { "date": "2026-11-09", "type": "X", "title": "Calcetto", "km": 0, "detail": "La sera. Niente corsa, al massimo 5 km blandi la mattina a 6:00." },
+        { "date": "2026-11-10", "type": "E", "title": "Easy", "km": 10, "pace": "5:35–5:50", "detail": "Gambe legnose dal calcetto, va bene così. Sforzo 3–4." },
+        { "date": "2026-11-11", "type": "R", "title": "Allunghi", "km": 8, "pace": "5:35–5:50", "detail": "6 allunghi da 20\" a 3:55–4:05 con 60\" di corsetta tra uno e l'altro, il resto facile." },
+        { "date": "2026-11-12", "type": "L", "title": "Lungo", "km": 16, "pace": "5:35–5:50", "detail": "Ultimi 2 km liberi se stai bene, non sotto 5:15. Sforzo 5–6." },
+        { "date": "2026-11-13", "type": "E", "title": "Recupero", "km": 6, "pace": "5:50–6:00", "detail": "Blando, poi a casa." }
+      ]
+    },
+    { "n": 2, "start": "2026-11-16", "targetKm": 40, "sessions": [] },
+    { "n": 3, "start": "2026-11-23", "targetKm": 45, "sessions": [] },
+    { "n": 4, "start": "2026-11-30", "targetKm": 45, "sessions": [] },
+    { "n": 5, "start": "2026-12-07", "targetKm": 50, "sessions": [] },
+    { "n": 6, "start": "2026-12-14", "targetKm": 40, "note": "Scarico", "sessions": [] },
+    { "n": 7, "start": "2026-12-21", "targetKm": 50, "sessions": [] },
+    { "n": 8, "start": "2026-12-28", "targetKm": 50, "sessions": [] },
+    { "n": 9, "start": "2027-01-04", "targetKm": 55, "sessions": [] },
+    { "n": 10, "start": "2027-01-11", "targetKm": 55, "sessions": [] },
+    { "n": 11, "start": "2027-01-18", "targetKm": 45, "note": "Scarico", "sessions": [] },
+    { "n": 12, "start": "2027-01-25", "targetKm": 60, "sessions": [] },
+    { "n": 13, "start": "2027-02-01", "targetKm": 65, "sessions": [] },
+    { "n": 14, "start": "2027-02-08", "targetKm": 55, "note": "Scarico", "sessions": [] },
+    { "n": 15, "start": "2027-02-15", "targetKm": 68, "sessions": [] },
+    { "n": 16, "start": "2027-02-22", "targetKm": 70, "note": "Lungo più lungo, 30–32 km. Mezza di prova se c'è.", "sessions": [] },
+    { "n": 17, "start": "2027-03-01", "targetKm": 58, "note": "Scarico", "sessions": [] },
+    { "n": 18, "start": "2027-03-08", "targetKm": 70, "note": "Ultimo lungo pieno", "sessions": [] },
+    { "n": 19, "start": "2027-03-15", "targetKm": 55, "note": "Taper", "sessions": [] },
+    { "n": 20, "start": "2027-03-22", "targetKm": 40, "note": "Taper", "sessions": [] },
+    { "n": 21, "start": "2027-03-29", "targetKm": 25, "race": true, "note": "Settimana di gara: 25 km facili + maratona domenica", "sessions": [] }
+  ]
+}
